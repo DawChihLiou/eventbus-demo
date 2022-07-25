@@ -3,9 +3,10 @@ import { eventbus } from './eventbus'
 describe('eventbus', () => {
   it('instantiate an event bus', () => {
     const bus = eventbus()
-    expect(Object.getOwnPropertyNames(bus)).toHaveLength(3)
+    expect(Object.getOwnPropertyNames(bus)).toHaveLength(4)
     expect(bus).toHaveProperty('on')
     expect(bus).toHaveProperty('off')
+    expect(bus).toHaveProperty('once')
     expect(bus).toHaveProperty('emit')
   })
 
@@ -71,6 +72,20 @@ describe('eventbus', () => {
     expect(handler1).toBeCalledWith(payload)
     expect(handler2).toBeCalledTimes(1)
     expect(handler2).toBeCalledWith(payload)
+  })
+
+  it('adds an event handler once', () => {
+    const bus = eventbus<{
+      'on-test-event': (payload: { data: string }) => void
+    }>()
+
+    const handler = jest.fn()
+    bus.once('on-test-event', handler)
+
+    bus.emit('on-test-event', { data: 'serialized::test=sample&' })
+    expect(handler).toBeCalledTimes(1)
+    bus.emit('on-test-event', { data: 'serialized::test=dropped&' })
+    expect(handler).toBeCalledTimes(1)
   })
 
   it('unsubscribes an event', () => {

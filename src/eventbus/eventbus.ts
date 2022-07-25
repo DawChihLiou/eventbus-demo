@@ -4,17 +4,9 @@ type EventMap = Record<EventKey, EventHandler>
 type Bus<E> = Record<keyof E, E[keyof E][]>
 
 interface EventBus<T extends EventMap> {
-  /**
-   * Subscribe to an event with an event handler.
-   */
   on<Key extends keyof T>(key: Key, handler: T[Key]): () => void
-  /**
-   * Unsubscribe an event with a specific event handler.
-   */
   off<Key extends keyof T>(key: Key, handler: T[Key]): void
-  /**
-   * Emit an event with a payload.
-   */
+  once<Key extends keyof T>(key: Key, handler: T[Key]): void
   emit<Key extends keyof T>(key: Key, ...payload: Parameters<T[Key]>): void
 }
 
@@ -43,6 +35,15 @@ export function eventbus<E extends EventMap>(
     bus[key]?.splice(index >>> 0, 1)
   }
 
+  const once: EventBus<E>['once'] = (key, handler) => {
+    const handleOnce = (payload: Parameters<typeof handler>) => {
+      handler(payload)
+      off(key, handleOnce as typeof handler)
+    }
+
+    on(key, handleOnce as typeof handler)
+  }
+
   const emit: EventBus<E>['emit'] = (key, payload) => {
     bus[key]?.forEach((fn) => {
       try {
@@ -53,5 +54,5 @@ export function eventbus<E extends EventMap>(
     })
   }
 
-  return { on, off, emit }
+  return { on, off, once, emit }
 }
