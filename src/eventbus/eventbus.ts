@@ -18,7 +18,13 @@ interface EventBus<T extends EventMap> {
   emit<Key extends keyof T>(key: Key, ...payload: Parameters<T[Key]>): void
 }
 
-export function eventbus<E extends EventMap>(): EventBus<E> {
+interface EventBusConfig {
+  logError: (...params: any[]) => void
+}
+
+export function eventbus<E extends EventMap>(
+  config?: EventBusConfig
+): EventBus<E> {
   const bus: Partial<Bus<E>> = {}
 
   const on: EventBus<E>['on'] = (key, handler) => {
@@ -38,7 +44,13 @@ export function eventbus<E extends EventMap>(): EventBus<E> {
   }
 
   const emit: EventBus<E>['emit'] = (key, payload) => {
-    bus[key]?.forEach((fn) => fn(payload))
+    bus[key]?.forEach((fn) => {
+      try {
+        fn(payload)
+      } catch (e) {
+        config?.logError(e)
+      }
+    })
   }
 
   return { on, off, emit }

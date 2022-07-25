@@ -108,4 +108,33 @@ describe('eventbus', () => {
     bus.emit('on-event-1', 198238)
     expect(handler1).toHaveBeenCalledTimes(1)
   })
+
+  it('should fire all event handlers even after an error occurs', () => {
+    const logError = jest.fn()
+    const TestError = new Error('Handler #2 failed.')
+
+    const bus = eventbus<{
+      'on-event-1': () => void
+    }>({
+      logError,
+    })
+
+    const handler1 = jest.fn()
+    const handler2 = jest.fn().mockImplementation(() => {
+      throw TestError
+    })
+    const handler3 = jest.fn()
+    const handler4 = jest.fn()
+    bus.on('on-event-1', handler1)
+    bus.on('on-event-1', handler2)
+    bus.on('on-event-1', handler3)
+    bus.on('on-event-1', handler4)
+
+    bus.emit('on-event-1')
+    expect(logError).toBeCalledTimes(1)
+    expect(handler1).toHaveBeenCalledTimes(1)
+    expect(handler2).toHaveBeenCalledTimes(1)
+    expect(handler3).toHaveBeenCalledTimes(1)
+    expect(handler4).toHaveBeenCalledTimes(1)
+  })
 })
