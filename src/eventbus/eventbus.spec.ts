@@ -3,6 +3,7 @@ import { eventbus } from './eventbus'
 describe('eventbus', () => {
   it('instantiate an event bus', () => {
     const bus = eventbus()
+
     expect(Object.getOwnPropertyNames(bus)).toHaveLength(4)
     expect(bus).toHaveProperty('on')
     expect(bus).toHaveProperty('off')
@@ -74,7 +75,7 @@ describe('eventbus', () => {
     expect(handler2).toBeCalledWith(payload)
   })
 
-  it('adds an event handler once', () => {
+  it('adds an event handler and it can only be fired once', () => {
     const bus = eventbus<{
       'on-test-event': (payload: { data: string }) => void
     }>()
@@ -125,6 +126,32 @@ describe('eventbus', () => {
   })
 
   it('should fire all event handlers even after an error occurs', () => {
+    const TestError = new Error('Handler #2 failed.')
+
+    const bus = eventbus<{
+      'on-event-1': () => void
+    }>()
+
+    const handler1 = jest.fn()
+    const handler2 = jest.fn().mockImplementation(() => {
+      throw TestError
+    })
+    const handler3 = jest.fn()
+    const handler4 = jest.fn()
+    bus.on('on-event-1', handler1)
+    bus.on('on-event-1', handler2)
+    bus.on('on-event-1', handler3)
+    bus.on('on-event-1', handler4)
+
+    bus.emit('on-event-1')
+
+    expect(handler1).toHaveBeenCalledTimes(1)
+    expect(handler2).toHaveBeenCalledTimes(1)
+    expect(handler3).toHaveBeenCalledTimes(1)
+    expect(handler4).toHaveBeenCalledTimes(1)
+  })
+
+  it('should fire all event handlers and log error', () => {
     const logError = jest.fn()
     const TestError = new Error('Handler #2 failed.')
 
