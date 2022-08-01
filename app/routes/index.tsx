@@ -22,7 +22,7 @@ export default function Index() {
     lat: 51.2277,
     lng: 6.7735,
   })
-  const [zoom, setZoom] = useState<number>(12)
+  const [zoom, setZoom] = useState<number>(14)
   const [selectedMarker, setSelectedMarker] = useState<MarkerData>()
 
   const onIdle = (map: google.maps.Map) => {
