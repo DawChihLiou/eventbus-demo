@@ -152,13 +152,13 @@ describe('eventbus', () => {
   })
 
   it('should fire all event handlers and log error', () => {
-    const logError = jest.fn()
+    const onError = jest.fn()
     const TestError = new Error('Handler #2 failed.')
 
     const bus = eventbus<{
       'on-event-1': () => void
     }>({
-      logError,
+      onError,
     })
 
     const handler1 = jest.fn()
@@ -173,7 +173,7 @@ describe('eventbus', () => {
     bus.on('on-event-1', handler4)
 
     bus.emit('on-event-1')
-    expect(logError).toBeCalledTimes(1)
+    expect(onError).toBeCalledTimes(1)
     expect(handler1).toHaveBeenCalledTimes(1)
     expect(handler2).toHaveBeenCalledTimes(1)
     expect(handler3).toHaveBeenCalledTimes(1)
