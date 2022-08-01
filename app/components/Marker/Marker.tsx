@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { MarkerData } from '~/data/markers'
 
 interface MarkerProps extends google.maps.MarkerOptions {
@@ -8,8 +8,11 @@ interface MarkerProps extends google.maps.MarkerOptions {
 
 export default function Marker({ data, onClick, ...options }: MarkerProps) {
   const [marker, setMarker] = useState<google.maps.Marker>()
+  const handleClick = useCallback(() => {
+    onClick?.(data)
+  }, [data, onClick])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!marker) {
       setMarker(new google.maps.Marker())
     }
@@ -20,14 +23,13 @@ export default function Marker({ data, onClick, ...options }: MarkerProps) {
     }
   }, [marker])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (marker) {
       marker.setOptions(options)
-      marker.addListener('click', () => {
-        onClick?.(data)
-      })
+      marker.addListener('click', handleClick)
     }
-  }, [marker, options, data, onClick])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marker])
 
   return null
 }

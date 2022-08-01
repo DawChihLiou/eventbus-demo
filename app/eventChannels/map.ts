@@ -1,5 +1,5 @@
 import { eventbus } from 'eventbus'
-import { logger } from '~/utils/logger'
+import { logUserInteraction } from '~/utils/logger'
 
 export const mapEventChannel = eventbus<{
   onMapIdle: () => void
@@ -7,9 +7,9 @@ export const mapEventChannel = eventbus<{
 }>()
 
 mapEventChannel.on('onMapIdle', () => {
-  logger('on map idle.')
+  logUserInteraction('on map idle.')
 })
 
 mapEventChannel.on('onMapClick', (payload) => {
-  logger('on map click.', payload)
+  logUserInteraction('on map click.', payload)
 })

@@ -1,3 +1,3 @@
-export const logger = (...payload: any) => {
+export const logUserInteraction = (...payload: any) => {
   console.log('=== Log User Interaction ===', payload)
 }

@@ -6,8 +6,8 @@ import GoogleMap from '~/components/GoogleMap'
 import Portal from '~/components/Portal'
 import type { MarkerData } from '~/data/markers'
 import { markers } from '~/data/markers'
-import { mapEventChannel } from '~/events/map'
-import { markerEventChannel } from '~/events/marker'
+import { mapEventChannel } from '~/eventChannels/map'
+import { markerEventChannel } from '~/eventChannels/marker'
 
 export async function loader() {
   return json({
@@ -22,7 +22,7 @@ export default function Index() {
     lat: 51.2277,
     lng: 6.7735,
   })
-  const [zoom, setZoom] = useState<number>(13)
+  const [zoom, setZoom] = useState<number>(12)
   const [selectedMarker, setSelectedMarker] = useState<MarkerData>()
 
   const onIdle = (map: google.maps.Map) => {
@@ -57,11 +57,9 @@ export default function Index() {
           onMarkerClick={onMarkerClick}
         />
 
-        {selectedMarker && (
-          <Portal container={container.current}>
-            <Card {...selectedMarker} />
-          </Portal>
-        )}
+        <Portal container={container.current}>
+          {selectedMarker && <Card {...selectedMarker} />}
+        </Portal>
       </div>
       <div ref={container} />
     </>
