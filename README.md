@@ -1,6 +1,6 @@
 # Event Bus Demo
 
-![Screenshot](demo.png)
+![Screenshot](./demo.gif)
 
 This product is built with Remix
 
