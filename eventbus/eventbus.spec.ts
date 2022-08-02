@@ -11,7 +11,7 @@ describe('eventbus', () => {
     expect(bus).toHaveProperty('emit')
   })
 
-  it('adds an event with a handler without paylaod', () => {
+  it('adds an event with a handler without payload', () => {
     const bus = eventbus<{
       'on-event-1': () => void
     }>()
@@ -23,7 +23,7 @@ describe('eventbus', () => {
     expect(handler).toHaveBeenCalledTimes(1)
   })
 
-  it('adds an event with a handler with paylaod', () => {
+  it('adds an event with a handler with payload', () => {
     const bus = eventbus<{
       'on-event-1': (payload: { data: string }) => void
     }>()

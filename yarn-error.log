@@ -1,30 +1,30 @@
 Arguments: 
-  /usr/local/bin/node /Users/dliou/.node/corepack/yarn/1.22.19/bin/yarn.js add --dev @types/framer-motion
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.11/libexec/bin/yarn.js add --dev @types/rxjs
 
 PATH: 
-  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dliou/.cargo/bin
+  /Users/dawchihliou/.poetry/bin:/Users/dawchihliou/Library/Python/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dawchihliou/.cargo/bin
 
 Yarn version: 
-  1.22.19
+  1.22.11
 
 Node version: 
-  18.5.0
+  16.16.0
 
 Platform: 
-  darwin arm64
+  darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fframer-motion: Not found
-      at params.callback [as _callback] (/Users/dliou/.node/corepack/yarn/1.22.19/lib/cli.js:66145:18)
-      at self.callback (/Users/dliou/.node/corepack/yarn/1.22.19/lib/cli.js:140890:22)
-      at Request.emit (node:events:537:28)
-      at Request.<anonymous> (/Users/dliou/.node/corepack/yarn/1.22.19/lib/cli.js:141862:10)
-      at Request.emit (node:events:537:28)
-      at IncomingMessage.<anonymous> (/Users/dliou/.node/corepack/yarn/1.22.19/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:651:28)
-      at IncomingMessage.emit (node:events:549:35)
-      at endReadableNT (node:internal/streams/readable:1359:12)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+  Error: https://registry.yarnpkg.com/@types%2frxjs: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.11/libexec/lib/cli.js:66992:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.22.11/libexec/lib/cli.js:140763:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.11/libexec/lib/cli.js:141735:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.11/libexec/lib/cli.js:141657:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -45,6 +45,7 @@ npm manifest:
       "@googlemaps/react-wrapper": "^1.1.35",
       "@googlemaps/typescript-guards": "^2.0.1",
       "@netlify/functions": "^1.0.0",
+      "@reactivex/rxjs": "^6.6.7",
       "@remix-run/netlify": "^1.6.5",
       "@remix-run/node": "^1.6.5",
       "@remix-run/react": "^1.6.5",
@@ -53,7 +54,9 @@ npm manifest:
       "framer-motion": "^6.5.1",
       "google-map-react": "^2.2.0",
       "react": "^17.0.2",
-      "react-dom": "^17.0.2"
+      "react-dom": "^17.0.2",
+      "react-icons": "^4.4.0",
+      "rxjs": "^7.5.6"
     },
     "devDependencies": {
       "@babel/core": "^7.18.9",
@@ -1584,6 +1587,13 @@ Lockfile:
     integrity sha512-42jnZ6yl16GzjWSH7vtrmWyJDGVa/LXPdpN2rcUWolFjc9ON2N3uz0qdBbQACfmhuJZ2lbKYtmK5qx68ZPLHMA==
     dependencies:
       json-parse-even-better-errors "^2.3.1"
+  
+  "@reactivex/rxjs@^6.6.7":
+    version "6.6.7"
+    resolved "https://registry.yarnpkg.com/@reactivex/rxjs/-/rxjs-6.6.7.tgz#52ab48f989aba9cda2b995acc904a43e6e1b3b40"
+    integrity sha512-xZIV2JgHhWoVPm3uVcFbZDRVJfx2hgqmuTX7J4MuKaZ+j5jN29agniCPBwrlCmpA15/zLKcPi7/bogt0ZwOFyA==
+    dependencies:
+      tslib "^1.9.0"
   
   "@remix-run/dev@^1.6.5":
     version "1.6.5"
@@ -7042,6 +7052,11 @@ Lockfile:
       object-assign "^4.1.1"
       scheduler "^0.20.2"
   
+  react-icons@^4.4.0:
+    version "4.4.0"
+    resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
+    integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
+  
   react-is@^16.13.1:
     version "16.13.1"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -7384,7 +7399,7 @@ Lockfile:
     dependencies:
       queue-microtask "^1.2.2"
   
-  rxjs@^7.0.0, rxjs@^7.5.5:
+  rxjs@^7.0.0, rxjs@^7.5.5, rxjs@^7.5.6:
     version "7.5.6"
     resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.6.tgz#0446577557862afd6903517ce7cae79ecb9662bc"
     integrity sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==
@@ -8062,7 +8077,7 @@ Lockfile:
       minimist "^1.2.6"
       strip-bom "^3.0.0"
   
-  tslib@^1.13.0, tslib@^1.8.1:
+  tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0:
     version "1.14.1"
     resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
     integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==

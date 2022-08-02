@@ -1,6 +1,6 @@
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Card from '~/components/Card'
 import GoogleMap from '~/components/GoogleMap'
 import Portal from '~/components/Portal'
@@ -8,6 +8,7 @@ import type { MarkerData } from '~/data/markers'
 import { markers } from '~/data/markers'
 import { mapEventChannel } from '~/eventChannels/map'
 import { markerEventChannel } from '~/eventChannels/marker'
+import { logUserInteraction } from '~/utils/logger'
 
 export async function loader() {
   return json({
@@ -24,6 +25,31 @@ export default function Index() {
   })
   const [zoom, setZoom] = useState<number>(14)
   const [selectedMarker, setSelectedMarker] = useState<MarkerData>()
+
+  useEffect(() => {
+    const unsubscribeOnMapIdle = mapEventChannel.on('onMapIdle', () => {
+      logUserInteraction('on map idle.')
+    })
+    const unsubscribeOnMapClick = mapEventChannel.on(
+      'onMapClick',
+      (payload) => {
+        logUserInteraction('on map click.', payload)
+      }
+    )
+    const unsubscribeOnMarkerClick = markerEventChannel.on(
+      'onMarkerClick',
+      (payload) => {
+        logUserInteraction('on marker click.', payload)
+      }
+    )
+
+    // unsubscribe events when unmount
+    return () => {
+      unsubscribeOnMapIdle()
+      unsubscribeOnMapClick()
+      unsubscribeOnMarkerClick()
+    }
+  }, [])
 
   const onIdle = (map: google.maps.Map) => {
     mapEventChannel.emit('onMapIdle')

@@ -10,11 +10,7 @@
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css"
   },
   "dependencies": {
-    "@dicebear/avatars": "^4.10.3",
-    "@dicebear/avatars-male-sprites": "^4.10.3",
-    "@dicebear/big-ears-neutral": "^4.10.3",
     "@googlemaps/react-wrapper": "^1.1.35",
-    "@googlemaps/typescript-guards": "^2.0.1",
     "@netlify/functions": "^1.0.0",
     "@remix-run/netlify": "^1.6.5",
     "@remix-run/node": "^1.6.5",
